@@ -59,8 +59,7 @@ class DailyVolumeTask(Task):
             return 
 
         logging.debug(lines[0])
-
-        self._write_raw(writer, lines, header)
+        writer.write(self._date, header, lines)
 
 
 if __name__ == '__main__':

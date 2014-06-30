@@ -1,0 +1,52 @@
+异常检测框架 CIS-332
+与原框架catcher相比，拆分了读写数据与检测逻辑，便于灵活组合，同时支持多个detector间的依赖关系
+执行方法: python main.py [TASK_NAME] -d $i
+
+main.py: TaskPerformer，对外接口
+config.py: 各种任务配置, 字段解析方法等
+
+reader
+  |----- Reader.py
+            |----- MysqlReader.py
+            |----- HiveReader.py
+            |----- CsvReader.py
+
+writer
+  |----- Writer.py
+            |----- MysqlWriter.py
+                        |-------- DetectResultWriter.py
+                                        |-------------- DailyVolumeDetectResult.py
+                                        |-------------- ResellDetectResult.py
+
+task
+  |----- task.py
+            |------ DailyVolumeTask.py (与DailyVolumeDetectResult.py对应 )
+            |------ ResellTask.py (与ResellDetectResult.py对应)
+  |----- debug (存放离线调试时使用的数据文件)
+
+detector
+  |----- Detector.py
+            |------ DailyVolumeDetector.py (面向DailyVolumeTask的Detector)
+                            |-------------- QuantityIncrease.py
+                            |-------------- QuantityIncreaseDaily.py
+                            |-------------- HighPrice.py
+                            |-------------- VolumeStartHigh.py
+                            |-------------- AbnormalDailyVolume.py
+            |------ DealResellDetector.py (面向ResellTask的Detector)
+                            |-------------- NaiveResellDetector.py
+
+combiner
+  |----- combiner.py
+            |--------- NullCombiner.py
+
+utils
+  |----- utils.py
+  |----- topology.py
+  |----- EditDistance.py
+  |----- debug (存放离线调试时使用的数据文件)
+
+log (每个具体的task对应一个log, 以task_name命名)
+  |----- ROUTINE_DAILY_VOLUME_DETECT.log
+  |----- ROUTINE_DEAL_RESELL_DETECT.log
+
+

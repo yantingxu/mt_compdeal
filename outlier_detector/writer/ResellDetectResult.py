@@ -16,17 +16,7 @@ class ResellDetectResult(DetectResultWriter):
         RESULT_TABLE_DDL = '''
             CREATE TABLE `%s` (
               `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-              `detect_date` date NOT NULL COMMENT '存储检测哪天的记录的异常',
-              `dealid` int(11) NOT NULL DEFAULT '0' COMMENT '竞对项目编号',
-              `old_dealid` int(11) NOT NULL DEFAULT '0' COMMENT '历史竞对项目编号',
-              `strategy` varchar(100) NOT NULL DEFAULT '' COMMENT '识别出此记录的策略标识',
-              `basenumber` int(11) DEFAULT '-1' COMMENT '基准销量',
-              `extra` text COMMENT '其他信息，json格式，用来存储不同策略的非共性结果',
-              `modtime` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
               PRIMARY KEY(`id`),
-              KEY (`detect_date`, `strategy`),
-              KEY (`dealid`, `old_dealid`),
-              KEY `modtime` (`modtime`)
             ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='异常检测结果集';
         ''' % self._table_name
         return RESULT_TABLE_DDL

@@ -45,7 +45,7 @@ class ResellTask(Task):
                 format_line = [self._date, result['old_dealid'], dealid, strategy, result['basenumber'], json.dumps(result)]
                 lines.append(format_line)
 
-        self._write_raw(writer, lines, header)
+        writer.write(self._date, header, lines)
 
 if __name__ == '__main__':
 

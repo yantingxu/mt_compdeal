@@ -155,13 +155,4 @@ class Task(object):
         """ 以什么格式写？"""
         raise Exception('Implement Me!!')
 
-    def _write_raw(self, writer, lines, header):
-        """ 写操作 """
-        if self._is_debug:
-            from writer.CsvWriter import CsvWriter
-            csv_writer = CsvWriter()
-            filename = os.path.join(os.path.dirname(os.path.realpath(__file__)), 'debug/%s_result_%s.data' % (self._task_name, time.strftime("%Y%m%d%H%M%S", time.localtime())))
-            logging.debug("CSV_RESULT_FILE: %s" % filename)
-            csv_writer.write(lines, filename, header, False)
-        writer.write(self._date, header, lines)
 
